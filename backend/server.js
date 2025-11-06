@@ -11,6 +11,8 @@ app.use(cors());
 app.use(express.json());
 const port = 3000;
 
+const chatHistory = new Map();
+
 app.post("/support", async (req, res) => {
     try {
         console.log('Incoming /support request', req.body);
@@ -23,6 +25,17 @@ app.post("/support", async (req, res) => {
             });
         }
 
+        let history = chatHistory.get(email);
+        if (!history) {
+            history = [];
+            chatHistory.set(email, history);
+        }
+
+        history.push({
+            role: "user",
+            parts: [{ text: message }] 
+        });
+
         const info = await getCustomerInfo(email);
 
         if (!info) {
@@ -31,10 +44,16 @@ app.post("/support", async (req, res) => {
             });
         }
 
-        const ai = await getAIResponse(info, message);
-        console.log('AI response', ai);
+        const aiResponse = await getAIResponse(info, history);
 
-        return res.json({ response: ai });
+        history.push({
+            role: "model",
+            parts: [{ text: aiResponse }] 
+        });
+
+        console.log('AI response', aiResponse);
+
+        return res.json({ response: aiResponse });
     } catch (error) {
         console.error("Erro ao processar requisição /support:", error);
         return res.status(500).json({
