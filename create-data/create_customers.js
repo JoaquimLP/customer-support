@@ -105,8 +105,8 @@ for (const customer of customers) {
 
 const baseDbConfig = {
     host: 'localhost',
-    user: 'postgres',
-    password: 'postgres'
+    user: 'teste',
+    password: 'password',
 };
 
 const databaseName = 'customer-chat';

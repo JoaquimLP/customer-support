@@ -4,8 +4,8 @@ const databaseName = 'customer-chat';
 
 const baseDbConfig = {
     host: 'localhost',
-    user: 'postgres',
-    password: 'postgres'
+    user: 'teste',
+    password: 'password',
 };
 
 const adminPool = new Pool({ ...baseDbConfig, database: databaseName });

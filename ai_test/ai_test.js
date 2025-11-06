@@ -9,8 +9,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const baseDbConfig = {
     host: 'localhost',
-    user: 'postgres',
-    password: 'postgres'
+    user: 'teste',
+    password: 'password',
 };
 
 const databaseName = 'customer-chat';
